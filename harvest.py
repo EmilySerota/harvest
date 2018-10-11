@@ -105,7 +105,7 @@ class Melon(object):
         if field == 3:
             return False
         #melons are sellable if they meet color and shape standard greater than 5
-        elif shape_rating > 5 and color_rating > 5:
+        elif int(shape_rating) > 5 and int(color_rating) > 5:
             return True
         else:
             return False
@@ -140,7 +140,34 @@ def get_sellability_report(melons):
         else:
             print("Harvested by {0} from Field {1} NOT SELLABLE".format(melon.harvester, melon.field))
 
+
+
+def imported_melons(melon_log):
+    '''
+    Read melon log and return list of Melon objects 
+    '''
+    melons = []
+
+    with open(melon_log) as log:
+
+        for line in log:
+            line.strip()
+            words = line.split(" ")
+            shape_rating = words[1]
+            color_rating = words[3]
+            code = words[5]
+            harvester = words[8]
+            field = words[11]
+
+            melon = Melon(melon_dict[code], shape_rating, color_rating, field, harvester)
+            melons.append(melon)
+
+    return melons
+
+#test
 melon_types = make_melon_types()
-melons = make_melons(melon_types)
-get_sellability_report(melons)
+melon_dict = make_melon_type_lookup(melon_types)
+melons = imported_melons('harvest_log.txt')
+for melon in melons:
+    print(melon.is_sellable(melon.shape_rating, melon.color_rating, melon.field))
 
