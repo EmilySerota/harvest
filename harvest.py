@@ -100,7 +100,7 @@ class Melon(object):
     def __repr__(self):
         return '{}'.format(self.melon_type)
 
-    def is_sellable(shape_rating, color_rating, field):
+    def is_sellable(self, shape_rating, color_rating, field):
         #reject melons from field 3 that was accidentally poisoned by neighboring farm
         if field == 3:
             return False
@@ -130,17 +130,17 @@ def make_melons(melon_types):
 
     return melons
 
-# def get_sellability_report(melons):
-#     """Given a list of melon object, prints whether each one is sellable."""
 
-#     for melon in melons:
-#         print(melon.harvester)
-#         if melon.is_sellable(melon.shape_rating, melon.color_rating, melon.field):
-#             print("Harvested by {0} from Field {1} CAN BE SOLD".format(melon.harvester, melon.field))
-#         else:
-#             print("Harvested by {0} from Field {1} NOT SELLABLE".format(melon.harvester, melon.field))
-# #test
-# melon_types = make_melon_types()
-# melons = make_melons(melon_types)
-# get_sellability_report(melons)
+def get_sellability_report(melons):
+    """Given a list of melon object, prints whether each one is sellable."""
+
+    for melon in melons:
+        if melon.is_sellable(melon.shape_rating, melon.color_rating, melon.field):
+            print("Harvested by {0} from Field {1} CAN BE SOLD".format(melon.harvester, melon.field))
+        else:
+            print("Harvested by {0} from Field {1} NOT SELLABLE".format(melon.harvester, melon.field))
+
+melon_types = make_melon_types()
+melons = make_melons(melon_types)
+get_sellability_report(melons)
 
